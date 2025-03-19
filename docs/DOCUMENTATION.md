@@ -1,230 +1,210 @@
-# Sea Level Predictor Dashboard - Technical Documentation
+# Sea Level Predictor Documentation
 
-## 1. Project Overview
-The Sea Level Predictor Dashboard is an interactive web application built with Streamlit that visualizes and analyzes sea level rise trends using EPA data.
+## Overview
 
-## 2. Installation & Setup
+The Sea Level Predictor is an interactive application for analyzing and predicting sea level changes using EPA (Environmental Protection Agency) data. This application provides advanced visualization tools, statistical analysis, and predictive modeling capabilities.
 
-### 2.1 Prerequisites
-- Python 3.8+
-- pip or conda package manager
+## Features
 
-### 2.2 Installation Steps
+### Data Analysis
+- Historical sea level data analysis
+- Trend detection and analysis
+- Statistical modeling
+- Confidence interval calculations
+
+### Visualization
+- Interactive plots with Plotly
+- Dynamic charts and animations
+- Customizable themes
+- Multiple view options
+
+### Prediction
+- Linear regression modeling
+- Polynomial regression
+- Future trend predictions
+- Confidence intervals
+
+## Getting Started
+
+### Installation
 ```bash
 # Create virtual environment
-python -m venv sealevel_env
-source sealevel_env/bin/activate  # Linux/Mac
-.\sealevel_env\Scripts\activate   # Windows
+python -m venv env
+source env/bin/activate  # Linux/Mac
+.\env\Scripts\activate   # Windows
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Run the application
+streamlit run app.py
 ```
 
-### 2.3 Running the Application
+### Dependencies
+- streamlit>=1.32.0
+- pandas
+- plotly>=5.18.0
+- numpy
+- scipy
+- seaborn>=0.13.2
+
+## Usage Guide
+
+### Data Loading
+1. Navigate to the data upload section
+2. Select your data file (CSV format)
+3. Verify data format and columns
+4. Click "Load Data"
+
+### Analysis
+1. Select analysis parameters
+2. Choose visualization options
+3. Configure prediction settings
+4. View results and insights
+
+### Visualization
+1. Select chart type
+2. Customize appearance
+3. Adjust parameters
+4. Export or share results
+
+## Technical Details
+
+### Data Format
+```csv
+date,level
+1880,0.0
+1881,0.1
+...
+```
+
+### Model Specifications
+- Linear regression with confidence intervals
+- Polynomial regression for non-linear trends
+- Seasonal decomposition
+- Anomaly detection
+
+### Performance Optimization
+- Data caching
+- Lazy loading
+- Progressive rendering
+- Memory management
+
+## Advanced Features
+
+### Custom Analysis
+```python
+def custom_analysis(data):
+    # Your custom analysis code
+    return results
+```
+
+### Custom Visualization
+```python
+def custom_plot(data, config):
+    # Your custom plotting code
+    return figure
+```
+
+### Data Export
+- CSV format
+- Excel format
+- JSON format
+- PDF reports
+
+## Troubleshooting
+
+### Common Issues
+1. **Data Loading Errors**
+   - Check file format
+   - Verify column names
+   - Check data types
+
+2. **Performance Issues**
+   - Clear cache
+   - Reduce data size
+   - Optimize queries
+
+3. **Visualization Problems**
+   - Check browser compatibility
+   - Update dependencies
+   - Clear browser cache
+
+### Error Messages
+- Detailed error descriptions
+- Solution steps
+- Support contact information
+
+## Contributing
+
+### Development Setup
+1. Fork the repository
+2. Create feature branch
+3. Make changes
+4. Submit pull request
+
+### Code Standards
+- PEP 8 compliance
+- Type hints
+- Documentation
+- Tests
+
+### Testing
+```bash
+# Run tests
+pytest tests/
+
+# Run with coverage
+pytest --cov=src tests/
+```
+
+## Deployment
+
+### Local Deployment
 ```bash
 streamlit run app.py
 ```
 
-## 3. Common Issues & Troubleshooting
+### Cloud Deployment
+1. Connect to Streamlit Cloud
+2. Configure environment
+3. Deploy application
 
-### 3.1 Date Range Error
-**Error**: `streamlit.errors.StreamlitAPIException: Date value should be date/datetime`
-**Solution**: 
-- Check date format conversion in load_data()
-- Ensure Year column contains valid integers
-- Verify datetime conversions are correct
+### Monitoring
+- Performance metrics
+- Error tracking
+- Usage statistics
 
-### 3.2 Data Loading Error
-**Error**: `FileNotFoundError: epa-sea-level.csv not found`
-**Solution**:
-- Verify CSV file exists in project root
-- Check file permissions
-- Ensure correct working directory
+## Security
 
-### 3.3 Prediction Range Error
-**Error**: `ValueError: x and y must have same first dimension`
-**Solution**:
-- Check data filtering logic
-- Verify prediction year range
-- Ensure no missing values in data
+### Authentication
+- User authentication
+- Role-based access
+- Session management
 
-## 4. Code Structure
+### Data Protection
+- Input validation
+- Output sanitization
+- Access control
 
-### 4.1 Main Components
-- `app.py`: Main application file
-- `load_data()`: Data loading and preprocessing
-- `create_prediction_data()`: Prediction calculations
-- `main()`: Application entry point
+## Support
 
-### 4.2 Key Functions
-```python
-def load_data():
-    # Loads and preprocesses data
-    # Returns: pandas DataFrame
+### Documentation
+- User guides
+- API reference
+- Examples
 
-def create_prediction_data():
-    # Creates prediction data using linear regression
-    # Returns: years, predictions, slope, intercept, r2
-```
+### Contact
+- Issue reporting
+- Feature requests
+- Technical support
 
-## 5. Customization Guide
+## License
 
-### 5.1 Adding New Features
-1. Add new controls to sidebar
-2. Update visualization logic
-3. Add new statistical calculations
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### 5.2 Modifying Predictions
-1. Adjust prediction range in sidebar
-2. Modify regression parameters
-3. Update confidence intervals
+## Acknowledgments
 
-## 6. Maintenance
-
-### 6.1 Data Updates
-1. Replace epa-sea-level.csv with new data
-2. Ensure column names match expected format
-3. Verify data types and ranges
-
-### 6.2 Performance Optimization
-1. Use caching for data loading
-2. Optimize filtering operations
-3. Minimize redundant calculations
-
-## 7. Testing
-
-### 7.1 Manual Testing Steps
-1. Verify data loading
-2. Check prediction calculations
-3. Validate visualization updates
-4. Test export functionality
-
-### 7.2 Automated Testing
-```python
-# Example test case
-def test_prediction_data():
-    df = load_data()
-    years, pred, slope, intercept, r2 = create_prediction_data(
-        df, 2000, 2050, False
-    )
-    assert len(years) == 51
-    assert all(pred.notna())
-```
-
-## 3. Sécurité et Performance
-
-### A. Sécurité
-```python
-# Configuration recommandée
-st.set_page_config(
-    page_title="Prédicteur Niveau Mer",
-    page_icon="🌊",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Protection des données
-st.secrets["key"] = "valeur"  # Pour les variables sensibles
-```
-
-### B. Optimisation
-```python
-# Cache des données
-@st.cache_data
-def load_data():
-    return pd.read_csv("data.csv")
-
-# Cache des calculs
-@st.cache_resource
-def perform_heavy_calculation():
-    # calculs intensifs
-    pass
-```
-
-## 4. Maintenance et Surveillance
-
-### A. Logs et Monitoring
-```python
-# Configuration des logs
-import logging
-
-logging.basicConfig(
-    filename='app.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-
-# Exemple d'utilisation
-logging.info("Application démarrée")
-logging.error("Erreur détectée")
-```
-
-### B. Sauvegarde des Données
-```bash
-# Script de sauvegarde
-#!/bin/bash
-DATE=$(date +%Y%m%d)
-cp data/epa-sea-level.csv backup/data_$DATE.csv
-```
-
-## 5. Résolution des Problèmes Courants
-
-### A. Erreurs de Déploiement
-1. **Erreur de Port**
-   ```bash
-   # Solution
-   export PORT=8501
-   streamlit run app.py
-   ```
-
-2. **Erreur de Dépendances**
-   ```bash
-   # Solution
-   pip freeze > requirements.txt
-   pip install -r requirements.txt
-   ```
-
-### B. Problèmes de Performance
-1. **Optimisation de la Mémoire**
-   ```python
-   # Réduction de l'utilisation mémoire
-   def optimize_dataframe(df):
-       for col in df.select_dtypes(['float']):
-           df[col] = pd.to_numeric(df[col], downcast='float')
-       return df
-   ```
-
-2. **Gestion du Cache**
-   ```python
-   # Nettoyage périodique
-   if st.button('Vider le Cache'):
-       st.cache_data.clear()
-   ```
-
-## 6. Mise à Jour de l'Application
-
-### A. Procédure de Mise à Jour
-1. Test local
-2. Push sur GitHub
-3. Déploiement automatique
-
-### B. Rollback
-```bash
-# En cas de problème
-git reset --hard HEAD~1
-git push -f origin main
-```
-
-## 7. Documentation Utilisateur
-
-### A. Guide Rapide
-```markdown
-1. Accéder à l'URL de l'application
-2. Sélectionner les paramètres d'analyse
-3. Visualiser les résultats
-4. Exporter les données si nécessaire
-```
-
-### B. Contact Support
-Email: support@votre-app.com
-Tickets: github.com/votre-repo/issues
+- EPA for providing the data
+- Streamlit for the framework
+- Contributors and maintainers
