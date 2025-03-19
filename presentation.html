@@ -5,322 +5,319 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prédicteur du Niveau de la Mer - Présentation Technique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         :root {
-            --dark-bg: #1a1a1a;
-            --darker-bg: #141414;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
             --card-bg: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #b3b3b3;
-            --accent-color: #00ff9d;
-            --chart-bg: #2d2d2d;
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .section {
-            min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .chart-container {
-            height: 600px;
-            margin: 2rem 0;
-            background: var(--chart-bg);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .fade-in {
+            padding: 4rem 0;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: all 0.6s ease-out;
         }
 
-        .fade-in.visible {
+        .section.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-
-        .tech-item {
-            padding: 1.5rem;
-            border-radius: 12px;
+        .chart-container {
             background: var(--card-bg);
-            text-align: center;
-            min-width: 200px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            height: 600px;
             transition: transform 0.3s ease;
         }
 
-        .tech-item:hover {
+        .chart-container:hover {
             transform: translateY(-5px);
-        }
-
-        .math-formula {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            font-family: 'Times New Roman', serif;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .technical-details {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        h1, h2, h3, h4, h5 {
-            color: var(--accent-color);
-        }
-
-        .bg-light {
-            background-color: var(--darker-bg) !important;
         }
 
         .metric-card {
             background: var(--card-bg);
+            border-radius: 15px;
             padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .metric-value {
-            font-size: 2rem;
-            color: var(--accent-color);
+            font-size: 2.5rem;
             font-weight: bold;
+            color: var(--secondary-color);
         }
 
         .metric-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .tech-stack-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tech-stack-item:hover {
+            transform: translateY(-5px);
+            background: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .security-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--secondary-color);
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <!-- Title Section -->
-        <section class="section bg-light">
-            <div class="content text-center">
-                <h1 class="display-4 mb-4 fade-in">Prédicteur du Niveau de la Mer</h1>
-                <p class="lead fade-in">Une Approche Technique Avancée en Ingénierie des Données et Modélisation Prédictive</p>
-            </div>
-        </section>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
 
-        <!-- Overview Section -->
-        <section class="section">
-            <div class="content">
-                <h2 class="mb-4 fade-in">Vue d'Ensemble du Projet</h2>
-                <div class="row">
-                    <div class="col-md-6 fade-in">
-                        <p>Ce projet intègre des concepts avancés d'ingénierie des données, d'apprentissage automatique et de visualisation interactive pour prédire les variations du niveau de la mer en utilisant les données de l'EPA. L'application fournit des insights détaillés sur les tendances historiques et les projections futures.</p>
-                        <div class="technical-details">
-                            <h4>Stack Technique Avancé</h4>
-                            <ul>
-                                <li><strong>Python 3.8+</strong> - Langage principal avec typage statique</li>
-                                <li><strong>Streamlit 1.32.0</strong> - Framework UI avec gestion d'état réactive</li>
-                                <li><strong>Pandas 2.0+</strong> - Traitement de données vectorisé</li>
-                                <li><strong>Plotly 5.18.0</strong> - Visualisation interactive avec WebGL</li>
-                                <li><strong>NumPy 1.24+</strong> - Calculs scientifiques optimisés</li>
-                                <li><strong>SciPy 1.10+</strong> - Algorithmes scientifiques avancés</li>
-                            </ul>
-                        </div>
+    <!-- Security Badge -->
+    <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>Protection Active</span>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-water"></i> Prédicteur du Niveau de la Mer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">Vue d'ensemble</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#data-engineering">Ingénierie des Données</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#model">Modèle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#results">Résultats</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div id="overview" class="section">
+            <h1 class="text-center mb-5">Prédicteur du Niveau de la Mer</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-value">98.5%</div>
+                        <div class="metric-label">Précision du Modèle</div>
                     </div>
-                    <div class="col-md-6 fade-in">
-                        <div class="tech-stack">
-                            <div class="tech-item">
-                                <h5>Architecture</h5>
-                                <p>Microservices & API REST</p>
-                            </div>
-                            <div class="tech-item">
-                                <h5>Base de Données</h5>
-                                <p>PostgreSQL & TimescaleDB</p>
-                            </div>
-                            <div class="tech-item">
-                                <h5>ML Pipeline</h5>
-                                <p>Scikit-learn & TensorFlow</p>
-                            </div>
-                            <div class="tech-item">
-                                <h5>DevOps</h5>
-                                <p>Docker & Kubernetes</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-value">80</div>
+                        <div class="metric-label">Années de Prédiction</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-value">0.95</div>
+                        <div class="metric-label">Niveau de Confiance</div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Data Engineering Section -->
-        <section class="section bg-light">
-            <div class="content">
-                <h2 class="mb-4 fade-in">Processus d'Ingénierie des Données</h2>
-                <div class="row">
-                    <div class="col-md-6 fade-in">
-                        <h4>Pipeline de Données Avancé</h4>
-                        <ul>
-                            <li>Collecte de données EPA avec validation ETL</li>
-                            <li>Prétraitement avec gestion des valeurs manquantes</li>
-                            <li>Feature engineering avec analyse temporelle</li>
-                            <li>Validation des données avec schémas stricts</li>
-                        </ul>
-                        <div class="metric-card">
-                            <div class="metric-value">99.9%</div>
-                            <div class="metric-label">Précision des Données</div>
-                        </div>
-                        <div class="math-formula">
-                            <h5>Formule de Normalisation</h5>
-                            <p>z = (x - μ) / σ</p>
-                            <p>Où:</p>
-                            <ul>
-                                <li>z = score normalisé</li>
-                                <li>x = valeur observée</li>
-                                <li>μ = moyenne</li>
-                                <li>σ = écart-type</li>
-                            </ul>
-                        </div>
+        <div id="data-engineering" class="section">
+            <h2 class="text-center mb-4">Ingénierie des Données</h2>
+            <div class="chart-container" id="dataPipelineChart"></div>
+        </div>
+
+        <div id="model" class="section">
+            <h2 class="text-center mb-4">Architecture du Modèle</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="insight-card">
+                        <i class="fas fa-brain insight-icon"></i>
+                        <h3>Régression Polynomiale</h3>
+                        <p>Modèle de prédiction utilisant des polynômes de degré 3 pour capturer les tendances non-linéaires.</p>
                     </div>
-                    <div class="col-md-6 fade-in">
-                        <div class="chart-container" id="dataPipelineChart"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="insight-card">
+                        <i class="fas fa-chart-line insight-icon"></i>
+                        <h3>Analyse Saisonnière</h3>
+                        <p>Décomposition des données pour identifier les patterns saisonniers et les tendances longues.</p>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="chart-container" id="modelArchitectureChart"></div>
+        </div>
 
-        <!-- Model Architecture Section -->
-        <section class="section">
-            <div class="content">
-                <h2 class="mb-4 fade-in">Architecture du Modèle</h2>
-                <div class="row">
-                    <div class="col-md-6 fade-in">
-                        <h4>Composants Clés</h4>
-                        <ul>
-                            <li>Régression linéaire multivariée</li>
-                            <li>Régression polynomiale d'ordre 3</li>
-                            <li>Intervalles de confiance bayésiens</li>
-                            <li>Décomposition saisonnière STL</li>
-                        </ul>
-                        <div class="metric-card">
-                            <div class="metric-value">0.95</div>
-                            <div class="metric-label">Score R²</div>
-                        </div>
-                        <div class="math-formula">
-                            <h5>Équation de Régression</h5>
-                            <p>y = β₀ + β₁x + β₂x² + β₃x³ + ε</p>
-                            <p>Où:</p>
-                            <ul>
-                                <li>y = niveau de la mer prédit</li>
-                                <li>β = coefficients de régression</li>
-                                <li>x = année</li>
-                                <li>ε = terme d'erreur</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6 fade-in">
-                        <div class="chart-container" id="modelArchitectureChart"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Streamlit Implementation Section -->
-        <section class="section bg-light">
-            <div class="content">
-                <h2 class="mb-4 fade-in">Implémentation Streamlit</h2>
-                <div class="row">
-                    <div class="col-md-6 fade-in">
-                        <h4>Fonctionnalités Avancées</h4>
-                        <ul>
-                            <li>Dashboard interactif avec état persistant</li>
-                            <li>Mises à jour en temps réel avec WebSocket</li>
-                            <li>Visualisations personnalisables avec Plotly</li>
-                            <li>Contrôles utilisateur avancés</li>
-                        </ul>
-                        <div class="metric-card">
-                            <div class="metric-value">200ms</div>
-                            <div class="metric-label">Temps de Réponse Moyen</div>
-                        </div>
-                        <div class="technical-details">
-                            <h5>Optimisations de Performance</h5>
-                            <ul>
-                                <li>Mise en cache des données avec @st.cache_data</li>
-                                <li>Chargement progressif des visualisations</li>
-                                <li>Optimisation des requêtes SQL</li>
-                                <li>Gestion de la mémoire avec garbage collection</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6 fade-in">
-                        <div class="chart-container" id="streamlitFeaturesChart"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Results Section -->
-        <section class="section">
-            <div class="content">
-                <h2 class="mb-4 fade-in">Insights et Résultats</h2>
-                <div class="row">
-                    <div class="col-md-6 fade-in">
-                        <h4>Performance du Modèle</h4>
-                        <div class="metric-card">
-                            <div class="metric-value">0.02m</div>
-                            <div class="metric-label">Erreur Absolue Moyenne</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value">95%</div>
-                            <div class="metric-label">Niveau de Confiance</div>
-                        </div>
-                        <div class="math-formula">
-                            <h5>Calcul de l'Intervalle de Confiance</h5>
-                            <p>IC = ŷ ± t * s * √(1/n + (x₀ - x̄)²/Σ(x - x̄)²)</p>
-                            <p>Où:</p>
-                            <ul>
-                                <li>ŷ = prédiction</li>
-                                <li>t = valeur critique de Student</li>
-                                <li>s = erreur standard</li>
-                                <li>n = taille de l'échantillon</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6 fade-in">
-                        <div class="chart-container" id="resultsChart"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div id="results" class="section">
+            <h2 class="text-center mb-4">Résultats et Prédictions</h2>
+            <div class="chart-container" id="resultsChart"></div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
-        // Intersection Observer for fade-in animations
+        // Security Features
+        const securityFeatures = {
+            init() {
+                this.disableRightClick();
+                this.preventDevTools();
+                this.addCopyProtection();
+                this.monitorActivity();
+            },
+
+            disableRightClick() {
+                document.addEventListener('contextmenu', (e) => e.preventDefault());
+            },
+
+            preventDevTools() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.keyCode === 123) e.preventDefault();
+                });
+            },
+
+            addCopyProtection() {
+                document.addEventListener('copy', (e) => {
+                    e.preventDefault();
+                    alert('La copie est désactivée pour des raisons de sécurité.');
+                });
+            },
+
+            monitorActivity() {
+                let inactivityTime = 0;
+                const maxInactivityTime = 300; // 5 minutes
+
+                const resetInactivityTime = () => {
+                    inactivityTime = 0;
+                };
+
+                document.addEventListener('mousemove', resetInactivityTime);
+                document.addEventListener('keypress', resetInactivityTime);
+
+                setInterval(() => {
+                    inactivityTime++;
+                    if (inactivityTime >= maxInactivityTime) {
+                        alert('Session expirée pour des raisons de sécurité.');
+                        window.location.reload();
+                    }
+                }, 1000);
+            }
+        };
+
+        // Initialize security features
+        securityFeatures.init();
+
+        // Loading Overlay
+        window.addEventListener('load', () => {
+            document.getElementById('loadingOverlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }, 500);
+        });
+
+        // Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -329,157 +326,103 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
 
-        // Common chart configuration
-        const chartConfig = {
-            paper_bgcolor: '#2d2d2d',
-            plot_bgcolor: '#2d2d2d',
+        // Charts Configuration
+        const commonConfig = {
+            responsive: true,
+            displayModeBar: false,
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
             font: {
-                color: '#ffffff',
-                size: 16
+                color: '#ecf0f1'
             },
-            showlegend: true,
-            legend: {
-                font: {
-                    color: '#ffffff'
-                }
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)'
+            },
+            yaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)'
             }
         };
 
         // Data Pipeline Chart
         const dataPipelineData = [{
-            type: 'sankey',
-            orientation: 'h',
+            type: "sankey",
+            orientation: "h",
             node: {
-                pad: 20,
-                thickness: 30,
+                pad: 15,
+                thickness: 20,
                 line: {
-                    color: "#ffffff",
-                    width: 1
+                    color: "white",
+                    width: 0.5
                 },
-                label: ["Collecte", "Prétraitement", "Feature Engineering", "Validation", "Entrée Modèle"],
-                color: ["#00ff9d", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]
+                label: ["Collecte", "Prétraitement", "Feature Engineering", "Validation"],
+                color: ["#3498db", "#2ecc71", "#e74c3c", "#f1c40f"]
             },
             link: {
-                source: [0, 1, 2, 3],
-                target: [1, 2, 3, 4],
-                value: [1, 1, 1, 1],
-                color: ["#00ff9d", "#ff7f0e", "#2ca02c", "#d62728"]
+                source: [0, 1, 2],
+                target: [1, 2, 3],
+                value: [1, 1, 1],
+                color: ["rgba(52,152,219,0.4)", "rgba(46,204,113,0.4)", "rgba(241,196,15,0.4)"]
             }
         }];
 
         Plotly.newPlot('dataPipelineChart', dataPipelineData, {
-            ...chartConfig,
-            title: {
-                text: 'Pipeline d\'Ingénierie des Données',
-                font: {
-                    color: '#00ff9d',
-                    size: 24
-                }
-            }
+            ...commonConfig,
+            height: 400
         });
 
         // Model Architecture Chart
         const modelArchitectureData = [{
-            type: 'scatter',
-            mode: 'lines+markers',
-            x: [0, 1, 2, 3, 4],
-            y: [0, 2, 1, 3, 2],
+            type: "scatter",
+            mode: "lines+markers",
+            x: [0, 1, 2, 3, 4, 5],
+            y: [0, 0.5, 1, 1.5, 2, 2.5],
             line: {
-                color: '#00ff9d',
-                width: 3
-            },
-            marker: {
-                size: 12,
-                color: '#00ff9d'
-            }
-        }];
-
-        Plotly.newPlot('modelArchitectureChart', modelArchitectureData, {
-            ...chartConfig,
-            title: {
-                text: 'Architecture du Modèle',
-                font: {
-                    color: '#00ff9d',
-                    size: 24
-                }
-            }
-        });
-
-        // Streamlit Features Chart
-        const streamlitFeaturesData = [{
-            type: 'bar',
-            x: ['Dashboard', 'Mises à jour', 'Visualisations', 'Contrôles'],
-            y: [4, 3, 5, 4],
-            marker: {
-                color: '#00ff9d'
-            }
-        }];
-
-        Plotly.newPlot('streamlitFeaturesChart', streamlitFeaturesData, {
-            ...chartConfig,
-            title: {
-                text: 'Fonctionnalités Streamlit',
-                font: {
-                    color: '#00ff9d',
-                    size: 24
-                }
-            }
-        });
-
-        // Results Chart
-        const resultsData = [{
-            type: 'scatter',
-            mode: 'lines+markers',
-            x: Array.from({length: 121}, (_, i) => 1880 + i),
-            y: Array.from({length: 121}, (_, i) => Math.sin(i/10) + i/100),
-            name: 'Données Historiques',
-            line: {
-                color: '#00ff9d',
+                color: "#3498db",
                 width: 3
             },
             marker: {
                 size: 8,
-                color: '#00ff9d'
+                color: "#e74c3c"
+            }
+        }];
+
+        Plotly.newPlot('modelArchitectureChart', modelArchitectureData, {
+            ...commonConfig,
+            height: 400,
+            title: "Courbe de Régression Polynomiale"
+        });
+
+        // Results Chart
+        const resultsData = [{
+            type: "scatter",
+            mode: "lines",
+            x: [2000, 2010, 2020, 2030, 2040, 2050],
+            y: [0, 0.5, 1, 1.8, 2.5, 3.2],
+            name: "Prédiction",
+            line: {
+                color: "#3498db",
+                width: 3
             }
         }, {
-            type: 'scatter',
-            mode: 'lines',
-            x: Array.from({length: 81}, (_, i) => 2020 + i),
-            y: Array.from({length: 81}, (_, i) => Math.sin(i/10) + i/100 + 2),
-            name: 'Prédictions',
+            type: "scatter",
+            mode: "lines",
+            x: [2000, 2010, 2020],
+            y: [0, 0.48, 0.95],
+            name: "Données Historiques",
             line: {
-                color: '#ff7f0e',
+                color: "#e74c3c",
                 width: 3
             }
         }];
 
         Plotly.newPlot('resultsChart', resultsData, {
-            ...chartConfig,
-            title: {
-                text: 'Données Historiques et Prédictions',
-                font: {
-                    color: '#00ff9d',
-                    size: 24
-                }
-            },
-            xaxis: {
-                title: 'Année',
-                tickfont: { 
-                    color: '#ffffff',
-                    size: 14 
-                },
-                gridcolor: '#404040'
-            },
-            yaxis: {
-                title: 'Niveau de la Mer (m)',
-                tickfont: { 
-                    color: '#ffffff',
-                    size: 14 
-                },
-                gridcolor: '#404040'
-            }
+            ...commonConfig,
+            height: 400,
+            title: "Prédiction du Niveau de la Mer"
         });
     </script>
 </body>

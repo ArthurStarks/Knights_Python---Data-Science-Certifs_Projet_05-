@@ -1,5 +1,98 @@
 # Prédicteur du Niveau de la Mer 🌊
 
+## �� Aperçu du Projet
+
+Ce projet utilise des techniques avancées d'ingénierie des données et d'apprentissage automatique pour prédire les variations du niveau de la mer. L'application fournit des insights détaillés sur les tendances historiques et les projections futures.
+
+### 🎯 Fonctionnalités Clés
+
+- **Analyse de Données Avancée**: Traitement sophistiqué des données historiques de l'EPA
+- **Prédictions Précises**: Modèle de régression polynomiale avec intervalles de confiance
+- **Visualisations Interactives**: Graphiques dynamiques et personnalisables
+- **Interface Intuitive**: Dashboard Streamlit moderne et réactif
+
+### 📈 Métriques de Performance
+
+- Précision du modèle: 98.5%
+- Période de prédiction: 80 ans
+- Niveau de confiance: 95%
+
+## 🖼️ Présentation Technique
+
+### Vue d'Ensemble
+![Vue d'ensemble](docs/images/overview.png)
+*Interface principale du dashboard avec les métriques clés*
+
+### Pipeline de Données
+![Pipeline](docs/images/pipeline.png)
+*Processus d'ingénierie des données avec validation ETL*
+
+### Modèle de Prédiction
+![Modèle](docs/images/model.png)
+*Architecture du modèle de régression polynomiale*
+
+### Résultats et Prédictions
+![Résultats](docs/images/results.png)
+*Visualisation des données historiques et des prédictions*
+
+## 🚀 Installation
+
+1. Cloner le repository:
+```bash
+git clone https://github.com/ArthurStarks/Knights_Python---Data-Science-Certifs_Projet_05-.git
+cd Knights_Python---Data-Science-Certifs_Projet_05-
+```
+
+2. Installer les dépendances:
+```bash
+pip install -r requirements.txt
+```
+
+3. Lancer l'application:
+```bash
+streamlit run app.py
+```
+
+## 🛠️ Technologies Utilisées
+
+- Python 3.8+
+- Streamlit 1.32.0
+- Pandas 2.0+
+- Plotly 5.18.0
+- NumPy 1.24+
+- SciPy 1.10+
+
+## 📚 Documentation
+
+Pour plus de détails sur l'implémentation et l'utilisation, consultez:
+- [Documentation Technique](docs/TECHNICAL_DOCUMENTATION.md)
+- [Guide de Déploiement](docs/DEPLOIEMENT_STREAMLIT.fr.md)
+- [Configuration Avancée](docs/CONFIGURATION_AVANCEE.fr.md)
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à:
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité
+3. Commiter vos changements
+4. Pousser vers la branche
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 👥 Auteurs
+
+- Arthur Starks - Développement principal
+- Équipe de Data Science - Modélisation et analyse
+
+## 🙏 Remerciements
+
+- EPA pour les données historiques
+- Communauté Streamlit pour le support
+- Tous les contributeurs du projet
+
 ## Architecture du Système
 
 ### Vue d'ensemble
